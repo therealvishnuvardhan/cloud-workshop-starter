@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Cloud Profile</title>
+<style>
+  :root { --accent: #2563eb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; font-family: "Segoe UI", system-ui, sans-serif;
+         background: radial-gradient(circle at 20% 10%, #1e293b, #0b1120 60%); color: #e2e8f0;
+         display: flex; align-items: center; justify-content: center; padding: 32px; }
+  .card { width: min(560px, 100%); background: rgba(15, 23, 42, .85); border: 1px solid #1e293b;
+          border-radius: 20px; padding: 36px; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+  .top { display: flex; gap: 20px; align-items: center; }
+  .avatar { width: 84px; height: 84px; border-radius: 50%; background: var(--accent); flex: none;
+            display: grid; place-items: center; font-size: 32px; font-weight: 700; color: #fff; }
+  h1 { margin: 0; font-size: 28px; }
+  .sub { color: #94a3b8; margin-top: 4px; }
+  .about { margin: 22px 0 16px; line-height: 1.6; color: #cbd5e1; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 6px 12px; border-radius: 999px; background: #1e293b; border: 1px solid #334155; font-size: 13px; }
+  .live { margin-top: 26px; padding: 18px; border-radius: 14px; border: 1px dashed #334155; background: #0f172a; }
+  .live h2 { margin: 0 0 8px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .live p { margin: 6px 0; }
+  .fact { color: #cbd5e1; }
+  .meta { color: #64748b; font-size: 12px; }
+  button { margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 10px; background: var(--accent);
+           color: #fff; font-size: 14px; cursor: pointer; }
+  button:hover { filter: brightness(1.1); }
+  footer { margin-top: 22px; font-size: 12px; color: #64748b; text-align: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <div class="avatar" id="avatar"></div>
+    <div>
+      <h1 id="name"></h1>
+      <div class="sub" id="branch"></div>
+    </div>
+  </div>
+  <p class="about" id="about"></p>
+  <div class="chips" id="interests"></div>
+
+  <div class="live">
+    <h2>Live from the cloud</h2>
+    <div id="live"><p class="fact">Coming in Lab 4 — this panel will talk to a function you write and run in the cloud.</p></div>
+  </div>
+  <footer>Hosted on Amazon S3 · NMAMIT Cloud Workshop</footer>
+</div>
+
+<script>
+  // ===== EDIT THIS PART: it's all about you =====
+  const ME = {
+    name: "Anika R",
+    initials: "AR",
+    branch: "AI & DS · NMAMIT, Nitte",
+    about: "Learning how the cloud actually works — one command at a time.",
+    interests: ["Cloud", "Machine learning", "Music", "Cricket"],
+    color: "#2563eb",   // try "#16a34a", "#db2777", "#ea580c" ...
+    api: ""             // leave empty until Lab 4
+  };
+  // ==============================================
+
+  document.documentElement.style.setProperty("--accent", ME.color);
+  document.getElementById("avatar").textContent = ME.initials;
+  document.getElementById("name").textContent = ME.name;
+  document.getElementById("branch").textContent = ME.branch;
+  document.getElementById("about").textContent = ME.about;
+  document.getElementById("interests").innerHTML = ME.interests.map(i => '<span class="chip">' + i + "</span>").join("");
+
+  async function askTheCloud() {
+    const live = document.getElementById("live");
+    try {
+      const res = await fetch(ME.api + "/hello?name=" + encodeURIComponent(ME.name));
+      const d = await res.json();
+      live.innerHTML = "<p>" + d.message + "</p><p class='fact'>" + d.fact + "</p>" +
+        "<p class='meta'>Answered at " + d.servedAt + "</p><button onclick='askTheCloud()'>Ask the cloud again</button>";
+    } catch (e) {
+      live.innerHTML = "<p class='fact'>Could not reach the cloud: " + e + "</p>";
+    }
+  }
+  if (ME.api) askTheCloud();
+</script>
+</body>
+</html>

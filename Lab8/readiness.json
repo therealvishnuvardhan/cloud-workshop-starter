@@ -1,0 +1,13 @@
+{
+  "spec": {
+    "minReadySeconds": 3,
+    "template": {
+      "spec": {
+        "containers": [{
+          "name": "team-alpha-web",
+          "readinessProbe": { "httpGet": { "path": "/", "port": 80 }, "periodSeconds": 1 }
+        }]
+      }
+    }
+  }
+}

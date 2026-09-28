@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="2">
+<title>Team Alpha</title>
+<style>
+  :root { --bg: #1d4ed8; }          /* version colour: change this for v2 */
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg);
+         color: #fff; font-family: "Segoe UI", system-ui, sans-serif; text-align: center; }
+  .version { font-size: 18px; letter-spacing: .3em; text-transform: uppercase; opacity: .8; }
+  h1 { font-size: 64px; margin: 10px 0 24px; }
+  .pod { display: inline-block; padding: 14px 22px; border-radius: 14px; background: rgba(0,0,0,.25);
+         font-family: Consolas, monospace; font-size: 20px; }
+  .note { margin-top: 18px; opacity: .75; font-size: 14px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="version">Version 1</div>
+    <h1>Team Alpha</h1>
+    <div class="pod">served by <!--# echo var="hostname" --></div>
+    <div class="note">This page refreshes every 2 seconds &middot; <!--# echo var="date_local" --></div>
+  </div>
+</body>
+</html>
